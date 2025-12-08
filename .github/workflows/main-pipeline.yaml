@@ -22,5 +22,12 @@ jobs:
   # ÉTAPE 2 : ANALYSE DE SÉCURITÉ STATIQUE (SAST)
   # ═══════════════════════════════════════════════
   code-quality-sast:
-    needs: build-and-test  # ⚠️ Attend que le build soit terminé
+    needs: build-and-test
     uses: ./.github/workflows/code-quality-sast.yml
+
+  # ═══════════════════════════════════════════════
+  # ÉTAPE 3 : DÉTECTION DE SECRETS
+  # ═══════════════════════════════════════════════
+  secret-scanning:
+    needs: build-and-test  # ⚠️ S'exécute en PARALLÈLE avec code-quality-sast
+    uses: ./.github/workflows/secret-scanning.yml
